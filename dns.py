@@ -8,7 +8,7 @@ _KEYS = {k, v for key, os.environ[key] in os.environ if provider_related(os.envi
 
 def provider_related(environ_key):
     for provider in DRIVERS:
-        if environ_key.startswith(provider):
+        if environ_key.startswith(provider.upper()):
             return True
     return False
 
