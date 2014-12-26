@@ -17,7 +17,8 @@ def env_vars():
                 elif key[4:].startswith('RACKSPACE_US'):
                     provider = 'RACKSPACE_US'
                     env_vars['RACKSPACE_US'] = {}
-            env_vars[provider.upper()] = os.getenv(key)
+            sub_key = key[4:].split(provider.upper())[1][1:]
+            env_vars[provider.upper()][sub_key] = os.getenv(key)
     return env_vars
 
 
