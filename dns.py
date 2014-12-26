@@ -10,15 +10,24 @@ def env_vars():
             provider = key[4:].split('_')[0].lower()
             if provider not in env_vars:
                 if provider in DRIVERS:
-                    env_vars[provider] = {}
+                    env_vars[provider.upper()] = {}
                 elif key[4:].startswith('RACKSPACE_UK'):
-                    provider = 'rackspace_uk'
-                    env_vars['rackspace_uk'] = {}
+                    provider = 'RACKSPACE_UK'
+                    env_vars['RACKSPACE_UK'] = {}
                 elif key[4:].startswith('RACKSPACE_US'):
-                    provider = 'rackspace_us'
-                    env_vars['rackspace_us'] = {}
-            env_vars[provider] = os.getenv(key)
+                    provider = 'RACKSPACE_US'
+                    env_vars['RACKSPACE_US'] = {}
+            env_vars[provider.upper()] = os.getenv(key)
     return env_vars
+
+
+def drivers(config_map):
+    drivers = []
+    for provider in config_map:
+        cls = get_dns_driver(getattr(DNSProvider, provider))
+        drivers.append(cls)
+    return drivers
+
 
 if __name__ == '__main__':
     print(True)
