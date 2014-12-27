@@ -23,8 +23,9 @@ def env_vars():
 
 
 def drivers(config_map):
-    return (get_dns_driver(getattr(DNSProvider, provider))
-            for provider in config_map)
+    for provider in config_map:
+        cls = get_dns_driver(getattr(DNSProvider, provider))
+        yield cls(*config_map[provider])
 
 if __name__ == '__main__':
     print(True)
